@@ -2,6 +2,7 @@
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -28,10 +29,10 @@ namespace FizzBuzz.Infrastructure.Repository.FileManager.Infrastructure.Reposito
 
             try
             {
-                
+
                 using (var fileStream = _fileWrapper.File.Create(filePath))
                 {
-                    
+
                 }
 
                 return true;
@@ -43,12 +44,58 @@ namespace FizzBuzz.Infrastructure.Repository.FileManager.Infrastructure.Reposito
             }
 
         }
-
-        public List<FizzBuzzModel.FizzBuzzResponse> Print(FizzBuzzModel.FizzBuzzRequest request, string Limi20t, string FilePath)
+        public List<FizzBuzzModel.FizzBuzzResponse> Print(FizzBuzzModel.FizzBuzzRequest request, string Limit, string filePath)
         {
-            throw new NotImplementedException();
-        } 
+            List<FizzBuzzModel.FizzBuzzResponse> responses = new List<FizzBuzzModel.FizzBuzzResponse>();
 
+            int limit;
 
+            if (!string.IsNullOrEmpty(Limit))
+            {
+                if (int.TryParse(Limit, out limit))
+                {
+                    // Use the 'Limit' parameter if provided and successfully parsed.
+                }
+                else
+                {
+                    // Handle the case where the 'Limit' parameter is not a valid integer.
+                    // You can log an error or throw an exception, as appropriate.
+                }
+            }
+            else
+            {
+                limit = GetLimitFromConfiguration();
+            }
+
+            for (int i = request.StartNumber; i <= request.StartNumber + limit; i++)
+            {
+                List<string> fizzBuzzSeries = new List<string>();
+
+                // Your existing logic to populate fizzBuzzSeries...
+
+                FizzBuzzModel.FizzBuzzResponse response = new FizzBuzzModel.FizzBuzzResponse
+                {
+                    Series = fizzBuzzSeries
+                };
+
+                responses.Add(response);
+            }
+
+            return responses;
+        }
+
+        private int GetLimitFromConfiguration()
+        {
+            int limit;
+            if (int.TryParse(ConfigurationManager.AppSettings["FizzBuzzLimit"], out limit))
+            {
+                return limit;
+            }
+
+            // Default limit if not configured properly
+            return 20;
+        }
     }
 }
+
+

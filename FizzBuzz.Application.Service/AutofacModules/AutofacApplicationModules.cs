@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FizzBuzz.Infrastructure.Repository;
+using FizzBuzz.Infrastructure.Repository.FileManager.Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -15,13 +16,10 @@ namespace FizzBuzz.Application.Service.AutofacModules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<FileSystem>().
-                As<IFileSystem>().InstancePerDependency();
+            builder.RegisterType<FileSystem>().As<IFileSystem>().InstancePerDependency();
             builder.RegisterType< FizzBuzzRepository >().As<IFizzBuzzRepository>().InstancePerDependency();
-
-           
-
-
+            builder.RegisterType<FileManagerInfrastructureRepository>().As<IFileManagerInfrastructureRepository>().InstancePerDependency();
+            
             base.Load(builder);
         }
     }

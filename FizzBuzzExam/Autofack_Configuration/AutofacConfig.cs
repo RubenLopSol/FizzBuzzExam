@@ -2,6 +2,9 @@
 using Autofac.log4net;
 using FizzBuzz.Application.Service;
 using FizzBuzz.Application.Service.AutofacModules;
+using FizzBuzz.Application.Service.FileManager.AppService;
+using FizzBuzz.CrossCutting.Utilities.Error_Handling;
+using FizzBuzz.CrossCutting.Utilities.GetPath;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +24,11 @@ namespace FizzBuzzExam.Autofack_Configuration
 
             builder.RegisterType<Service1>().As<IFizzBuzzApiService>().InstancePerDependency();
             builder.RegisterType<FizzBuzzApplicationService>().As<IFizzBuzzApplicationSErvice>().InstancePerDependency();
+
+           builder.RegisterType<FileManagerApplicationService>().As<IFIleManagerApplicationService>().InstancePerDependency();
+
+            builder.RegisterType<ErrorHandling>().As<IErrorHandlin>().InstancePerDependency();
+            builder.RegisterType<GetPathFile>().As<IGetPathFile>().InstancePerDependency();
             
             return builder.Build();
         }

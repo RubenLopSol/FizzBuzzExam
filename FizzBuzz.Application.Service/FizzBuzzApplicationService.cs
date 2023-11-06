@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz.Application.Service
 {
-    public class FizzBuzzApplicationService
+    public class FizzBuzzApplicationService : IFizzBuzzApplicationSErvice
     {
         
         private IFizzBuzzRepository _fizzBuzzRepository;

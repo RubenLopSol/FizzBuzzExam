@@ -10,6 +10,7 @@ namespace FizzBuzz.Infrastructure.Repository.FileManager.Infrastructure.Reposito
     public interface IFileManagerInfrastructureRepository
     {
         bool CreateFile(string filePath);
-        List<FizzBuzzModel.FizzBuzzResponse> Print(FizzBuzzModel.FizzBuzzRequest request, string Limit, string FilePath);
+        List<FizzBuzzModel.FizzBuzzResponse> Print(FizzBuzzModel.FizzBuzzRequest request, string Limit, string filePath);
+        
     }
 }

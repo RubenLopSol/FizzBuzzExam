@@ -7,10 +7,7 @@ using FizzBuzz.Domain.Entities;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
 using System.ServiceModel.Web;
 
 
@@ -30,28 +27,27 @@ namespace FizzBuzzExam
 
         public Service1()
         {
-            FileManagerAPI();
+            //FileManagerAPI();
 
             
         }
         public Service1(IErrorHandlin errorHandling, ILog log, IFizzBuzzApplicationSErvice fizzBuzzApplicationService, IGetLimitFB getLimitFB,
             IGetPathFile getPathFile, IFIleManagerApplicationService fileManagerApplicationService)
         {
-            _fileManagerApplicationService = fileManagerApplicationService;
-            _getPathFile = getPathFile;
-            _getLimitFB = getLimitFB;
-            _fizzBuzzApplicationSErvice = fizzBuzzApplicationService;
-            _errorHandling = errorHandling;
-            _log = log;
+            this._fileManagerApplicationService = fileManagerApplicationService;
+            this._getPathFile = getPathFile;
+            this._getLimitFB = getLimitFB;
+            this._fizzBuzzApplicationSErvice = fizzBuzzApplicationService;
+            this._errorHandling = errorHandling;
+            this._log = log;
             _log.Info("Service1 Created");
+            FileManagerAPI();
         }
 
         public void FileManagerAPI()
         {
             filePath = _getPathFile.GetPath();
             _fileManagerApplicationService.CreateFile(filePath);
-
-
         }
 
         public List<FizzBuzzModel.FizzBuzzResponse> GetFizzBuzz(FizzBuzzModel.FizzBuzzRequest request)
