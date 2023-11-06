@@ -8,5 +8,6 @@ namespace FizzBuzz.Application.Service.FileManager.AppService
 {
     public interface IFIleManagerApplicationService
     {
+        bool CreateFile(string filePath);
     }
 }

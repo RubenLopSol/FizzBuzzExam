@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FizzBuzz.Domain.Entities;
+using FizzBuzz.Infrastructure.Repository;
+using FizzBuzz.Infrastructure.Repository.FileManager.Infrastructure.Repository;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +12,21 @@ namespace FizzBuzz.Application.Service
 {
     public class FizzBuzzApplicationService
     {
-        public List<string> GetFizzBuzz(int start, int limit)
+        
+        private IFizzBuzzRepository _fizzBuzzRepository;
+        private ILog _log;
+        public FizzBuzzApplicationService(IFizzBuzzRepository fizzBuzzRepository, ILog log)
         {
-            throw new NotImplementedException();
+
+            this._fizzBuzzRepository = fizzBuzzRepository;
+            this._log = log;
+
+            _log.Info("FizzBuzzApplicationService Created");
+        }
+
+        public List<FizzBuzzModel.FizzBuzzResponse> GetFizzBuzz(FizzBuzzModel.FizzBuzzRequest request, string limit, string FilePath)
+        {
+            return _fizzBuzzRepository.GetFizzBuzz(request, limit, FilePath);
         }
     }
 }

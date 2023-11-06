@@ -1,5 +1,7 @@
 ﻿using FizzBuzz.Application.Service;
+using FizzBuzz.Application.Service.FileManager.AppService;
 using FizzBuzz.CrossCutting.Utilities.Error_Handling;
+using FizzBuzz.CrossCutting.Utilities.GetPath;
 using FizzBuzz.CrossCutting.Utilities.Limit_FizzBuzz;
 using FizzBuzz.Domain.Entities;
 using log4net;
@@ -18,20 +20,38 @@ namespace FizzBuzzExam
     // NOTE: para iniciar el Cliente de prueba WCF para probar este servicio, seleccione Service1.svc o Service1.svc.cs en el Explorador de soluciones e inicie la depuración.
     public class Service1 : IFizzBuzzApiService
     {
+        private readonly IFIleManagerApplicationService _fileManagerApplicationService;
+        private readonly IGetPathFile _getPathFile;
         private readonly IGetLimitFB _getLimitFB;
         private readonly IFizzBuzzApplicationSErvice _fizzBuzzApplicationSErvice;
         private readonly IErrorHandlin _errorHandling;
         private readonly ILog _log;
+        private string filePath = string.Empty;
 
-       public Service1()
+        public Service1()
         {
+            FileManagerAPI();
+
+            
         }
-        public Service1(IErrorHandlin errorHandling, ILog log, IFizzBuzzApplicationSErvice fizzBuzzApplicationService, IGetLimitFB getLimitFB)
+        public Service1(IErrorHandlin errorHandling, ILog log, IFizzBuzzApplicationSErvice fizzBuzzApplicationService, IGetLimitFB getLimitFB,
+            IGetPathFile getPathFile, IFIleManagerApplicationService fileManagerApplicationService)
         {
+            _fileManagerApplicationService = fileManagerApplicationService;
+            _getPathFile = getPathFile;
             _getLimitFB = getLimitFB;
             _fizzBuzzApplicationSErvice = fizzBuzzApplicationService;
             _errorHandling = errorHandling;
             _log = log;
+            _log.Info("Service1 Created");
+        }
+
+        public void FileManagerAPI()
+        {
+            filePath = _getPathFile.GetPath();
+            _fileManagerApplicationService.CreateFile(filePath);
+
+
         }
 
         public List<FizzBuzzModel.FizzBuzzResponse> GetFizzBuzz(FizzBuzzModel.FizzBuzzRequest request)
@@ -39,7 +59,7 @@ namespace FizzBuzzExam
             try
             {
                 var limit = _getLimitFB.GetLimit();
-                return _fizzBuzzApplicationSErvice.GetFizzBuzz(request, limit);  // + LiMITE
+                return _fizzBuzzApplicationSErvice.GetFizzBuzz(request, limit, filePath);  
             }
             catch (WebFaultException<MessageResource> ex)
             {

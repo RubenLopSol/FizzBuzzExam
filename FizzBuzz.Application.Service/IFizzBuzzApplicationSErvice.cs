@@ -9,6 +9,6 @@ namespace FizzBuzz.Application.Service
 {
     public interface IFizzBuzzApplicationSErvice
     {
-        List<FizzBuzzModel.FizzBuzzResponse> GetFizzBuzz(FizzBuzzModel.FizzBuzzRequest request, string Limit);
+        List<FizzBuzzModel.FizzBuzzResponse> GetFizzBuzz(FizzBuzzModel.FizzBuzzRequest request, string Limit, string FilePath);
     }
 }

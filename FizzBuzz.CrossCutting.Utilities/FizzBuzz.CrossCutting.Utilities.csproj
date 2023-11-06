@@ -48,6 +48,8 @@
     <Compile Include="Error_Handling\ErrorHandling.cs" />
     <Compile Include="Error_Handling\IErrorHandlin.cs" />
     <Compile Include="Error_Handling\MessageResource.cs" />
+    <Compile Include="GetPath\GetPathFile.cs" />
+    <Compile Include="GetPath\IGetPathFile.cs" />
     <Compile Include="Limit_FizzBuzz\GetLimitFB.cs" />
     <Compile Include="Limit_FizzBuzz\IGetLimitFB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
